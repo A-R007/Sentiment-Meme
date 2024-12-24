@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentiment Analysis with Memes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Sentiment Analysis with Memes</h1>
+    <p>Enter a sentence to analyze its sentiment, and see a meme representing your emotion!</p>
+    <input type="text" id="sentenceInput" placeholder="Type your sentence here..." />
+    <button onclick="analyzeSentiment()">Analyze</button>
+
+    <div class="meme-container" id="memeContainer" style="display: none;">
+      <h2 id="sentimentResult"></h2>
+      <img id="memeImage" src="" alt="Meme Image" />
+    </div>
+  </div>
+  <div class="footer">Created with ❤️ for a fun experience!</div>
+
+  <script>
+    async function analyzeSentiment() {
+      const sentence = document.getElementById("sentenceInput").value;
+      if (!sentence) {
+        alert("Please enter a sentence to analyze.");
+        return;
+      }
+
+      const response = await fetch("/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: sentence }),
+      });
+
+      const data = await response.json();
+
+      const sentimentResult = document.getElementById("sentimentResult");
+      const memeImage = document.getElementById("memeImage");
+      const memeContainer = document.getElementById("memeContainer");
+
+      sentimentResult.textContent = `Detected Sentiment: ${data.sentiment}`;
+      memeImage.src = data.meme_url;
+      memeContainer.style.display = "block";
+    }
+  </script>
+</body>
+</html>
