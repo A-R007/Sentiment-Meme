@@ -16,8 +16,8 @@ Follow these steps to set up the project locally:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/sentiment-meme-generator.git
-cd sentiment-meme-generator
+git clone <repo-link>
+cd <your-folder>
 ```
 
 ### 2. Set Up a Virtual Environment
